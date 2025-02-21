@@ -10,13 +10,13 @@
                 <form class="bg-white rounded shadow-5-strong p-5">
                 <!-- Email input -->
                 <div class="form-outline mb-4" data-mdb-input-init>
-                  <input type="email" id="form1Example1" [(ngModel)]="userLoginObj.emailId" class="form-control" />
+                  <input type="email" id="form1Example1" name="LoginEmail" [(ngModel)]="userLoginObj.emailId" class="form-control" />
                   <label class="form-label" for="form1Example1">Email address</label>
                 </div>
   
                 <!-- Password input -->
                 <div class="form-outline mb-4" data-mdb-input-init>
-                  <input type="password" id="form1Example2" [(ngModel)]="userLoginObj.password" class="form-control" />
+                  <input type="password" id="form1Example2" name="LoginPassword" [(ngModel)]="userLoginObj.password" class="form-control" />
                   <label class="form-label" for="form1Example2">Password</label>
                 </div>
   
@@ -50,30 +50,25 @@
               <form class="bg-white rounded shadow-5-strong p-5">
                      <!-- Username input -->
                      <div class="form-outline mb-4" data-mdb-input-init>
-                        <input name="Username" [(ngModel)]="userRegisterObj.userName" type="text" id="form2Example1" class="form-control" />
+                        <input name="RegisterUsername" [(ngModel)]="userRegisterObj.userName" type="text" id="form2Example1" class="form-control" />
                         <label class="form-label" for="form2Example1">Username</label>
                         </div>
 
                     <!-- Email input -->
                     <div class="form-outline mb-4" data-mdb-input-init>
-                    <input name="Email" [(ngModel)]="userRegisterObj.emailId" type="email" id="form2Example2" class="form-control" />
+                    <input name="RegisterEmail" [(ngModel)]="userRegisterObj.emailId" type="email" id="form2Example2" class="form-control" />
                     <label class="form-label" for="form2Example2">Email address</label>
                     </div>
     
                     <!-- Password input -->
                     <div class="form-outline mb-4" data-mdb-input-init>
-                    <input name="password" [(ngModel)]="userRegisterObj.password" type="password" id="form2Example3" class="form-control" />
+                    <input name="Registerpassword" [(ngModel)]="userRegisterObj.password" type="password" id="form2Example3" class="form-control" />
                     <label class="form-label" for="form2Example3">Password</label>
-                    </div>
-                    
-                    <!-- Register button -->
-                    <div class="form-outline mb-4" data-mdb-input-init>
-                        <button type="button" class="btn btn-primary btn-block" data-mdb-ripple-init (click)="onRegister()">Register</button>
                     </div>
 
                     <!-- 2 column grid layout for inline styling -->
                     <div class="row mb-4">
-                        <div class="col d-flex justify-content-center">
+                        <div class="col d-flex justify-content">
                             <!-- Checkbox -->
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
@@ -83,9 +78,22 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Submit button -->
-                    <button type="button" class="btn btn-primary btn-block" data-mdb-ripple-init (click)="isLoginView=true">Login</button>
+                    <div class="row mb-4">
+                        <div class="col d-flex justify-content-center">
+                            <!-- Register button -->
+                            <div class="form-outline mb-4" data-mdb-input-init>
+                                <button type="button" class="btn btn-primary btn-block" data-mdb-ripple-init (click)="onRegister()">Register</button>
+                           </div>
+                            
+                        </div>
+                        <div class="col d-flex justify-content-center">
+                            <div class="form-outline mb-4" data-mdb-input-init>
+                            <!-- Submit button -->
+                                <button type="button" class="btn btn-primary btn-block" data-mdb-ripple-init (click)="isLoginView=true">Login</button>
+                            </div>
+                            
+                        </div>
+                    </div>
                 </form>
             }
             </div>
