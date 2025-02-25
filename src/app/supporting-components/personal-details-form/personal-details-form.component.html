@@ -1,0 +1,51 @@
+<div class="modal-body" [formGroup]="form">
+  <div class="row">
+    <div class="col">
+      <label for="fname_field" class="info-label">First Name:</label>
+      <mat-form-field appearance="outline">
+        <input matInput id="fname_field" type="text" formControlName="first_name">
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <label for="lname_field" class="info-label">Last Name:</label>
+      <mat-form-field appearance="outline">
+        <input matInput id="lname_field" type="text" formControlName="last_name">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+      <label for="email_field" class="info-label">Email ID:</label>
+      <mat-form-field appearance="outline">
+        <input matInput id="email_field" type="email" formControlName="email" style="width: 50%;">
+      </mat-form-field>
+    </div>
+  <div class="row">
+      <label for="phone_field" class="info-label">Phone Number:</label>
+      <mat-form-field appearance="outline">
+        <input matInput id="phone_field" type="text" formControlName="phone">
+      </mat-form-field>
+    </div>
+
+  <div class="row">
+    <div class="col">
+      <label for="gender_field" class="info-label">Gender:</label>
+      <mat-form-field appearance="outline">
+        <mat-select id="gender_field" formControlName="gender">
+          @for (gender of genders; track gender) {
+            <mat-option [value]="gender.value">{{ gender.viewValue }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <label for="dob_field" class="info-label">Date of Birth:</label>
+      <mat-form-field appearance="outline">
+        <input matInput id="dob_field" [matDatepicker]="picker" formControlName="dob">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+.info-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 5px;
+  }
+  
+  .col {
+    flex: 1;
+    min-width: 250px;
+  }
+  
+  mat-form-field {
+    width: 100%;  
+    max-width: 400px; 
+  }
+  
