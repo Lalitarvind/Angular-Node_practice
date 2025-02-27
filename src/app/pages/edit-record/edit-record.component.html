@@ -1,0 +1,27 @@
+<dialog open aria-labelledby="Add-Profile" aria-hidden="true">
+  <form [formGroup]="form">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+          <div class="modal-header border-bottom d-flex justify-content-between mb-10 p-2">
+            <h5 class="modal-title">Edit Record</h5>
+            <button type="button" class="btn-close" aria-label="Close" (click)="onClose()"></button>
+          </div>
+          <app-personal-details-form [form]="form"></app-personal-details-form>
+          <div class="modal-footer d-flex justify-content-start mt-2 gap-3">
+            <button 
+              type="button" 
+              (click)="onEdit()"
+              mat-flat-button
+              [disabled]="!(form.valid && form.dirty)"
+              [ngStyle]="{
+                'color': (form.valid && form.dirty) ? 'white' : 'darkgray',
+                'opacity': (form.valid && form.dirty) ? '1':'0.5',
+              }">Save</button>
+            <button mat-stroked-button style="color: black" (click)="onReset()">
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+  </form>
+</dialog>

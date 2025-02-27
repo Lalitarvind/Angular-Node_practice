@@ -36,8 +36,20 @@ export class PersonalDetailsFormComponent {
       email: this.form.value.email,
       gender: this.form.value.gender,
       phone: this.form.value.phone,
-      dob: this.form.value.dob,
+      dob: new Date(this.form.value.dob).toISOString().split('T')[0]
     }
     return formValues
+  }
+  getDirtyValues(){
+    let result:any = {}
+    Object.keys(this.form.controls).forEach(key => {
+      if (this.form.controls[key].dirty){
+        if (key=="dob"){
+          result[key]=new Date(this.form.controls[key].value).toISOString().split('T')[0]
+        }
+        else{result[key]=this.form.controls[key].value;} 
+      }
+    });
+    return result
   }
 }
