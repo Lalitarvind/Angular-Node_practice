@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms'; 
 import { Router } from '@angular/router';
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   selector: 'app-login',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
