@@ -1,0 +1,26 @@
+<dialog open aria-labelledby="Add-Profile" aria-hidden="true">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom d-flex justify-content-between mb-10 p-2">
+              <h5 class="modal-title">Modal title</h5>
+              <button type="button" class="btn-close" aria-label="Close" (click)="onClose()"></button>
+            </div>
+            <div class="mt-4 mb-2 justify-content-start">
+                <label for="file_input">Choose a file to import records:</label>
+                <input type="file" id="file_input"(change)="onFileSelected($event)" accept=".csv" formControlName="file_select">
+            </div>
+            <div class="modal-footer d-flex justify-content-end mt-2">
+              <button 
+                type="submit" 
+                mat-flat-button
+                [disabled]="!(form.valid && form.dirty)"
+                [ngStyle]="{
+                  'color': (form.valid && form.dirty) ? 'white' : 'darkgray',
+                  'opacity': (form.valid && form.dirty) ? '1':'0.5',
+                }">Upload</button>
+            </div>
+          </div>
+        </div>
+    </form>
+  </dialog>
