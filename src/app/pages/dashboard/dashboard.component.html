@@ -1,0 +1,52 @@
+<div
+  style="
+    padding: 2%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+  "
+>
+  <div id="actions" class="d-flex flex-row justify-content-end">
+      <button
+        mat-button extended
+        (click)="onAddRecord()"
+        aria-label="Add record"
+        style="color: black"
+      >
+        <mat-icon>add</mat-icon>
+        ADD
+      </button>
+      <button
+        mat-button extended
+        [disabled]="selectedRecords.length==0"
+        (click)="onDeleteRecords()"
+        aria-label="Delete record"
+        style="color: black"
+      >
+        <mat-icon>delete</mat-icon>
+        DELETE
+      </button>
+      <button
+        mat-button extended
+        (click)="onImportRecords()"
+        aria-label="Import Record"
+        style="color: black"
+      >
+        <mat-icon>file_upload</mat-icon>
+        Import Records
+      </button>
+      <button
+        mat-button extended
+        (click)="onExportRecords()"
+        aria-label="Import Record"
+        style="color: black"
+      >
+        <mat-icon>file_download</mat-icon>
+        Export Records
+      </button>
+  </div>
+  <!-- <app-actions /> -->
+  <div style="height: 70vh; width: 100%">
+    <app-grid></app-grid>
+  </div>
+</div>
