@@ -1,46 +1,75 @@
 <div class="modal-body" [formGroup]="form">
-  <div class="row">
+  <div class="row gx-3">
     <div class="col">
       <label for="fname_field" class="info-label">First Name:</label>
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="w-100">
         <input matInput id="fname_field" type="text" formControlName="first_name">
       </mat-form-field>
     </div>
     <div class="col">
       <label for="lname_field" class="info-label">Last Name:</label>
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="w-100">
         <input matInput id="lname_field" type="text" formControlName="last_name">
       </mat-form-field>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row mt-2">
+    <div class="col">
       <label for="email_field" class="info-label">Email ID:</label>
-      <mat-form-field appearance="outline">
-        <input matInput id="email_field" type="email" formControlName="email" style="width: 50%;">
+      <mat-form-field appearance="outline" class="w-100">
+        <input matInput id="email_field" type="email" formControlName="email">
       </mat-form-field>
     </div>
-  <div class="row">
+  </div>
+
+  <div class="row gx-3 mt-2">
+    <div class="col">
       <label for="phone_field" class="info-label">Phone Number:</label>
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="w-100">
         <input matInput id="phone_field" type="text" formControlName="phone">
       </mat-form-field>
     </div>
+    <div class="col">
+      <label for="image_input" class="info-label mb-2">Image:</label>
+      <div class="d-flex align-items-center gap-2">
+        <input matInput id="hidden_file_size" type="text" formControlName="hidden_file_size" hidden>
+        <input type="file" #image_input (change)="onFileSelected($event)" 
+          accept="image/*" formControlName="image" hidden>
 
-  <div class="row">
+        <button mat-flat-button color="primary" type="button" (click)="image_input.click()">Choose</button>
+
+        <mat-form-field appearance="outline" class="overflow-hidden w-50">
+          <input matInput type="text" [value]="fileName || 'No file chosen'" placeholder="No file chosen" readonly>
+        </mat-form-field>
+      </div>
+      @if(form.controls['image'].dirty || form.controls['image'].touched){
+      <div class="text-danger mt-1" >
+        <!-- @if(form.controls['image'].errors?.['required']){
+        <div >File is required.</div>
+        } -->
+         @if(form.controls['hidden_file_size'].errors?.['fileSizeExceeded']; as fileExceeded){
+          <div>File size exceeds the limit of {{fileExceeded.maxSizeInKB}}.</div>
+         }
+      </div>
+    }
+    </div>
+  </div>
+
+  <div class="row gx-3 mt-2">
     <div class="col">
       <label for="gender_field" class="info-label">Gender:</label>
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="w-100">
         <mat-select id="gender_field" formControlName="gender">
-          @for (gender of genders; track gender) {
-            <mat-option [value]="gender.value">{{ gender.viewValue }}</mat-option>
-          }
+          <mat-option *ngFor="let gender of genders;" [value]="gender.value">
+            {{ gender.viewValue }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div class="col">
       <label for="dob_field" class="info-label">Date of Birth:</label>
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="w-100">
         <input matInput id="dob_field" [matDatepicker]="picker" formControlName="dob">
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>

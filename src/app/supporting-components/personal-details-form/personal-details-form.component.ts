@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatDatepickerModule,
     MatSelectModule,
+    MatButtonModule,
     ReactiveFormsModule,
     CommonModule
   ],
@@ -24,32 +26,54 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class PersonalDetailsFormComponent {
   @Input() form!:FormGroup;
+  @Input() fileName!:string;
+  selectedImage!:File;
   genders:any[]=[
       {value:'male', viewValue:'Male'},
       {value:'female', viewValue:'Female'},
       {value:'transgender', viewValue:'Transgender'}
     ]
-  getFormValues(){
-    const formValues = {
-      first_name: this.form.value.first_name,
-      last_name: this.form.value.last_name,
-      email: this.form.value.email,
-      gender: this.form.value.gender,
-      phone: this.form.value.phone,
-      dob: new Date(this.form.value.dob).toISOString().split('T')[0]
+  onFileSelected(event: any) {
+      this.selectedImage = event.target.files[0];
+      this.fileName = this.selectedImage.name;
+      this.form.patchValue({
+        hidden_file_size:this.selectedImage.size
+      })
+      this.form.get('hidden_file_size')?.markAsTouched()
     }
-    return formValues
+  getFormValues(){
+    const formData = new FormData();
+    formData.append('file', this.selectedImage);
+    formData.append('jsondata',JSON.stringify({
+      'first_name': this.form.value.first_name,
+      'last_name': this.form.value.last_name,
+      'email': this.form.value.email,
+      'gender': this.form.value.gender,
+      'phone': this.form.value.phone,
+      'dob': new Date(this.form.value.dob).toISOString().split('T')[0]
+  }))
+    return formData
   }
   getDirtyValues(){
-    let result:any = {}
+    let updates:FormData = new FormData();
+    let jsondata:any = {}
     Object.keys(this.form.controls).forEach(key => {
       if (this.form.controls[key].dirty){
         if (key=="dob"){
-          result[key]=new Date(this.form.controls[key].value).toISOString().split('T')[0]
+          jsondata[key]=new Date(this.form.controls[key].value).toISOString().split('T')[0];
         }
-        else{result[key]=this.form.controls[key].value;} 
+        else if(key=="image"){
+          updates.append('file',this.selectedImage);
+        }
+        else if(key=="hidden_file_size"){
+          return
+        }
+        else{
+          jsondata[key]=this.form.controls[key].value
+        } 
       }
     });
-    return result
+    updates.append('jsondata', JSON.stringify(jsondata))
+    return updates;
   }
 }
