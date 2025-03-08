@@ -1,12 +1,12 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import { FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { FormGroup, Validators, ReactiveFormsModule, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { PersonalDetailsFormComponent } from "../../supporting-components/personal-details-form/personal-details-form.component";
 import { OverlayService } from '../../services/overlay.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { ContentService } from '../../services/content.service';
 import { CommunicationService } from '../../services/communication.service';
-
+import { fileSizeValidator } from '../../validators/file-size.validator';
 @Component({
   selector: 'app-add-record',
   standalone: true,
@@ -22,14 +22,17 @@ import { CommunicationService } from '../../services/communication.service';
 export class AddRecordComponent {
   commsService = inject(CommunicationService)
   contentService = inject(ContentService)
+
   @ViewChild(PersonalDetailsFormComponent) formBodyComponent!: PersonalDetailsFormComponent;
   form:FormGroup = new FormGroup({
     first_name: new FormControl('',[Validators.required]),
     last_name: new FormControl('',[Validators.required]),
     email: new FormControl('',[Validators.required,Validators.email]),
     gender: new FormControl<string|null>(null,[Validators.required]),
-    phone: new FormControl('',[]),
-    dob: new FormControl<Date|null>(null,[Validators.required])
+    phone: new FormControl('',[Validators.required]),
+    dob: new FormControl<Date|null>(null,[Validators.required]),
+    image: new FormControl(null, []),
+    hidden_file_size: new FormControl(0,[fileSizeValidator(10)])
   }) 
   overlayService = inject(OverlayService)
   async onSubmit(){
