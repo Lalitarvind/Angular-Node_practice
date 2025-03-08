@@ -1,49 +1,54 @@
-import { Component, Inject, inject, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, Inject, inject} from '@angular/core';
 import { ContentService } from '../../services/content.service';
 import { OverlayService } from '../../services/overlay.service';
-import { PersonalDetailsFormComponent } from '../../supporting-components/personal-details-form/personal-details-form.component';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { EditRecordComponent } from '../edit-record/edit-record.component';
-
+import {MatGridListModule} from '@angular/material/grid-list';
+export interface Tile {
+  color: string;
+  cols: number;
+  rows: number;
+  text: string;
+}
 @Component({
   selector: 'app-view-record',
   standalone: true,
   imports: [    
-      ReactiveFormsModule,
-      PersonalDetailsFormComponent,
-      CommonModule,
-      MatButtonModule
+      MatGridListModule,
+      MatButtonModule,
+      CommonModule
     ],
   templateUrl: './view-record.component.html',
   styleUrl: './view-record.component.css'
 })
+
 export class ViewRecordComponent {
-  contentService = inject(ContentService)
-  @ViewChild(PersonalDetailsFormComponent) formBodyComponent!: PersonalDetailsFormComponent;
-  form:FormGroup = new FormGroup({
-    first_name: new FormControl({value:'',disabled:true},[Validators.required]),
-    last_name: new FormControl({value:'',disabled:true},[Validators.required]),
-    email: new FormControl({value:'',disabled:true},[Validators.required,Validators.email]),
-    gender: new FormControl<string|null>({value:null,disabled:true},[Validators.required]),
-    phone: new FormControl({value:'',disabled:true},[]),
-    dob: new FormControl<Date|null>({value:null,disabled:true},[Validators.required])
-  }) 
+  contentService = inject(ContentService);
+  tiles!:Tile[];
   id!:number;
+  imgSrc!:string
   constructor(@Inject("overlayData") data: any){
     this.id = data.rid;
   }
   async ngOnInit(){
     const [row_data] = await this.contentService.getRecordByID(this.id)
-    this.form.setValue({
-      first_name:row_data.first_name,
-      last_name: row_data.last_name,
-      email: row_data.email,
-      phone: row_data.phone,
-      dob: new Date(row_data.dob),
-      gender: row_data.gender
-    })
+    this.tiles = [
+      {text: 'First Name', cols: 1, rows: 1, color: 'lightblue'},
+      {text: row_data.first_name, cols: 3, rows: 1, color: 'white'},
+      {text: 'Image', cols:2, rows:6, color: 'white'},
+      {text: 'Last Name', cols: 1, rows: 1, color: 'lightblue'},
+      {text: row_data.last_name, cols: 3, rows: 1, color: 'white'},
+      {text: 'E-mail', cols: 1, rows: 1, color: 'lightblue'},
+      {text: row_data.email, cols: 3, rows: 1, color: 'white'},
+      {text: 'Phone Number', cols: 1, rows: 1, color: 'lightblue'},
+      {text: row_data.phone, cols: 3, rows: 1, color: 'white'},
+      {text: 'Gender', cols: 1, rows: 1, color: 'lightblue'},
+      {text: row_data.gender, cols: 3, rows: 1, color: 'white'},
+      {text: 'Date of Birth', cols: 1, rows: 1, color: 'lightblue'},
+      {text: new Date(row_data.dob).toISOString().split('T')[0], cols: 3, rows: 1, color: 'white'},
+    ]
+    this.imgSrc = row_data.imageSrc
   }
   overlayService = inject(OverlayService)
   async onEdit(){

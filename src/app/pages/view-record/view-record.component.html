@@ -1,16 +1,31 @@
-<dialog open aria-labelledby="Add-Profile" aria-hidden="true">
-    <form [formGroup]="form">
+<dialog open aria-labelledby="Add-Profile">
       <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header border-bottom d-flex justify-content-between mb-10 p-2">
               <h5 class="modal-title">View Record</h5>
               <button type="button" class="btn-close" aria-label="Close" (click)="onClose()"></button>
             </div>
-            <app-personal-details-form [form]="form"></app-personal-details-form>
+            <div class="m-3">
+              <mat-grid-list cols="6" rowHeight="40px">
+                @for (tile of tiles; track tile) {
+                  <mat-grid-tile
+                    [colspan]="tile.cols"
+                    [rowspan]="tile.rows"
+                    [style.background]="tile.color"
+                    >
+                      <ng-container *ngIf="tile.text === 'Image'; else textContent">
+                        <img [src]="imgSrc" alt="Image" style="width: 100%; height: 100%; object-fit: cover;">
+                      </ng-container>
+                      <ng-template #textContent>
+                        {{tile.text}}
+                      </ng-template>
+                  </mat-grid-tile>
+                }
+              </mat-grid-list>
+            </div>
             <div class="modal-footer d-flex justify-content-start mt-2">
               <button type="button" mat-flat-button (click)="onEdit()">Edit</button>
             </div>
           </div>
         </div>
-    </form>
   </dialog>
