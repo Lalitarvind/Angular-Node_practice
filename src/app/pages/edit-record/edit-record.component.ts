@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { CommunicationService } from '../../services/communication.service';
 import { ContentService } from '../../services/content.service';
+import { fileSizeValidator } from '../../validators/file-size.validator';
 
 @Component({
   selector: 'app-edit-record',
@@ -20,7 +21,7 @@ import { ContentService } from '../../services/content.service';
   styleUrl: './edit-record.component.css',
 })
 export class EditRecordComponent {
-
+  fileName!:string
   commsService = inject(CommunicationService)
   contentService = inject(ContentService)
   @ViewChild(PersonalDetailsFormComponent) formBodyComponent!: PersonalDetailsFormComponent;
@@ -29,8 +30,10 @@ export class EditRecordComponent {
     last_name: new FormControl('',[Validators.required]),
     email: new FormControl('',[Validators.required,Validators.email]),
     gender: new FormControl<string|null>(null,[Validators.required]),
-    phone: new FormControl('',[]),
-    dob: new FormControl<Date|null>(null,[Validators.required])
+    phone: new FormControl('',[Validators.required]),
+    dob: new FormControl<Date|null>(null,[Validators.required]),
+    image: new FormControl(null,[]),
+    hidden_file_size: new FormControl(0,[fileSizeValidator(10)])
   }) 
   overlayService = inject(OverlayService)
   id!:number
@@ -57,10 +60,18 @@ export class EditRecordComponent {
       email: row_data.email,
       phone: row_data.phone,
       dob: new Date(row_data.dob),
-      gender: row_data.gender
+      gender: row_data.gender,
+      image: null,
+      hidden_file_size: 0
     })
+    if (row_data.image_path){
+      const patharr = row_data.image_path.split('/')
+      this.fileName = patharr[patharr.length-1]
+    }
   }
   onClose(){
     this.overlayService.close()
   }
+
+  
 }
