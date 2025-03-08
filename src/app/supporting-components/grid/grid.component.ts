@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { GridRow } from '../../interfaces';
 import { ContentService } from '../../services/content.service';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
+import { GridImageComponent } from '../grid-image/grid-image.component';
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -55,6 +56,8 @@ export class GridComponent {
     {field:"dob",headerName:"D.O.B",flex:1,valueFormatter:this.dateFormatter},
     {field:"phone",headerName:"Phone",flex:1},
     {field:"gender",headerName:"Gender",flex:1},
+    {field:"image_path", hide:true},
+    {field:"imageSrc",headerName:"Image",cellRenderer:GridImageComponent,flex:1},
     {field:"grid_actions", cellRenderer: GridActionsComponent,flex:1}
   ]
 
