@@ -8,12 +8,14 @@ import {MatMenuModule} from '@angular/material/menu'
   imports: [MatMenuModule],
   template: `<div class="button-row">
                 <div class="flex-container" [matMenuTriggerFor]="menu">
-                  <img [src]="this.params.value" alt='image' class="img-thumbnail"/>
+                  <img [src]="this.params.value[0]" alt='image' class="img-thumbnail"/>
                 </div>
                 <mat-menu #menu="matMenu">
-                  <div class="image-container">
-                    <img [src]="this.params.value" alt='image' class="img-fluid img-thumbnail"/>
-                  </div>
+                  @for (src of this.params.value; track $index) {
+                    <div class="image-container" mat-menu-item>
+                      <img [src]="src" alt='image' class="img-fluid img-thumbnail"/>
+                    </div>
+                  }
                 </mat-menu>
               </div>`,
   styles: `.button-row {

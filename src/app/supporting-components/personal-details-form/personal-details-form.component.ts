@@ -26,24 +26,25 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class PersonalDetailsFormComponent {
   @Input() form!:FormGroup;
-  @Input() fileName!:string;
-  selectedImage!:File;
+  @Input() fileNames!:string[];
+  selectedImages!:File[];
   genders:any[]=[
       {value:'male', viewValue:'Male'},
       {value:'female', viewValue:'Female'},
       {value:'transgender', viewValue:'Transgender'}
     ]
   onFileSelected(event: any) {
-      this.selectedImage = event.target.files[0];
-      this.fileName = this.selectedImage.name;
+      this.selectedImages = Array.from(event.target.files);
+      let imgSizes:number[] = []
+      this.selectedImages.forEach((img)=>{this.fileNames.push(img.name);imgSizes.push(img.size)});
       this.form.patchValue({
-        hidden_file_size:this.selectedImage.size
+        hidden_file_size:imgSizes
       })
       this.form.get('hidden_file_size')?.markAsTouched()
     }
   getFormValues(){
     const formData = new FormData();
-    formData.append('file', this.selectedImage);
+    this.selectedImages.forEach((img)=>formData.append('files',img))
     formData.append('jsondata',JSON.stringify({
       'first_name': this.form.value.first_name,
       'last_name': this.form.value.last_name,
@@ -63,7 +64,7 @@ export class PersonalDetailsFormComponent {
           jsondata[key]=new Date(this.form.controls[key].value).toISOString().split('T')[0];
         }
         else if(key=="image"){
-          updates.append('file',this.selectedImage);
+          this.selectedImages.forEach((img)=>updates.append('files',img))
         }
         else if(key=="hidden_file_size"){
           return

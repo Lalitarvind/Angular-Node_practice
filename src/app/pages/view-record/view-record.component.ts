@@ -27,7 +27,7 @@ export class ViewRecordComponent {
   contentService = inject(ContentService);
   tiles!:Tile[];
   id!:number;
-  imgSrc!:string
+  imgSources!:string[]
   constructor(@Inject("overlayData") data: any){
     this.id = data.rid;
   }
@@ -48,13 +48,14 @@ export class ViewRecordComponent {
       {text: 'Date of Birth', cols: 1, rows: 1, color: 'lightblue'},
       {text: new Date(row_data.dob).toISOString().split('T')[0], cols: 3, rows: 1, color: 'white'},
     ]
-    this.imgSrc = row_data.imageSrc
+    this.imgSources = row_data.imageSrc
   }
   overlayService = inject(OverlayService)
   async onEdit(){
     this.overlayService.close()
     this.overlayService.open(EditRecordComponent,{rid:this.id})
   }
+  
   onClose(){
     this.overlayService.close()
   }

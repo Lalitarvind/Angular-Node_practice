@@ -35,12 +35,12 @@
       <div class="d-flex align-items-center gap-2">
         <input matInput id="hidden_file_size" type="text" formControlName="hidden_file_size" hidden>
         <input type="file" #image_input (change)="onFileSelected($event)" 
-          accept="image/*" formControlName="image" hidden>
+          accept="image/*" formControlName="image" multiple hidden>
 
         <button mat-flat-button color="primary" type="button" (click)="image_input.click()">Choose</button>
 
         <mat-form-field appearance="outline" class="overflow-hidden w-50">
-          <input matInput type="text" [value]="fileName || 'No file chosen'" placeholder="No file chosen" readonly>
+          <input matInput type="text" [value]="fileNames? fileNames.join(', ') : 'No file chosen'" placeholder="No file chosen" readonly>
         </mat-form-field>
       </div>
       @if(form.controls['image'].dirty || form.controls['image'].touched){
@@ -48,8 +48,11 @@
         <!-- @if(form.controls['image'].errors?.['required']){
         <div >File is required.</div>
         } -->
-         @if(form.controls['hidden_file_size'].errors?.['fileSizeExceeded']; as fileExceeded){
-          <div>File size exceeds the limit of {{fileExceeded.maxSizeInKB}}.</div>
+         @if(form.controls['hidden_file_size'].errors?.['fileSizeExceeded']; as fileSizeExceeded){
+          <div>File size exceeds the limit of {{fileSizeExceeded.maxSizeInKB}}.</div>
+         }
+         @if(form.controls['hidden_file_size'].errors?.['fileCountExceeded']; as fileCountExceeded){
+          <div>File size exceeds the limit of {{fileCountExceeded.numSelected}}.</div>
          }
       </div>
     }
