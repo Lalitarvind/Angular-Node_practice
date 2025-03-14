@@ -1,4 +1,4 @@
-<div class="modal-body" [formGroup]="form">
+<div class="modal-body overflow-y-scroll" [formGroup]="form" >
   <div class="row gx-3">
     <div class="col">
       <label for="fname_field" class="info-label">First Name:</label>
@@ -77,6 +77,28 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row gx-3 mt-2">
+    <div class="col">
+      <label for="country_field" class="info-label">Country:</label>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-select id="country_field" formControlName="country">
+          <mat-option *ngFor="let country of countryOptions;" [value]="country.country_code" (onSelectionChange)="onCountrySelectionChange($event)">
+            {{ country.country_name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <label for="state_field" class="info-label">State:</label>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-select id="state_field" formControlName="state" [disabled]="form.value.country==null">
+          <mat-option *ngFor="let state of stateOptions;" [value]="state.state_code">
+            {{ state.state_name }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
   </div>

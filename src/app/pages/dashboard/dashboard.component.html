@@ -7,6 +7,14 @@
   "
 >
   <div id="actions" class="d-flex flex-row justify-content-end">
+    <mat-form-field>
+      <mat-label>Country</mat-label>
+      <mat-select (selectionChange)="onCountryFilterChange($event)" multiple>
+        @for (country of countryOptions; track country) {
+          <mat-option [value]="country.country_code">{{country.country_name}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
       <button
         mat-button extended
         (click)="onAddRecord()"

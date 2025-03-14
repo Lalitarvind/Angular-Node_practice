@@ -33,7 +33,9 @@ export class EditRecordComponent {
     phone: new FormControl('',[Validators.required]),
     dob: new FormControl<Date|null>(null,[Validators.required]),
     image: new FormControl(null,[]),
-    hidden_file_size: new FormControl([],[fileSizeValidator(10)])
+    hidden_file_size: new FormControl([],[fileSizeValidator(10)]),
+    country: new FormControl('',[Validators.required]),
+    state: new FormControl('',[Validators.required])
   }) 
   overlayService = inject(OverlayService)
   id!:number
@@ -62,7 +64,9 @@ export class EditRecordComponent {
       dob: new Date(row_data.dob),
       gender: row_data.gender,
       image: null,
-      hidden_file_size: []
+      hidden_file_size: [],
+      country: row_data.country,
+      state: row_data.state
     })
     if (row_data.image_path){
       for(let path of row_data.image_path){

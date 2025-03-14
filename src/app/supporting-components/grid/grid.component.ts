@@ -52,10 +52,12 @@ export class GridComponent {
     {field:"visibility",hide:true},
     {field:"first_name", headerName:"First Name", flex:1, filter: true, floatingFilter: true },
     {field:"last_name", headerName:"Last Name", flex:1, filter: true, floatingFilter: true },
-    {field:"email",headerName:"Email",flex:2, filter: true, floatingFilter: true },
+    {field:"email",headerName:"Email",flex:1, filter: true, floatingFilter: true },
     {field:"dob",headerName:"D.O.B",flex:1,valueFormatter:this.dateFormatter},
     {field:"phone",headerName:"Phone",flex:1},
     {field:"gender",headerName:"Gender",flex:1},
+    {field:"country",headerName:"Country",flex:1},
+    {field:"state",headerName:"State",flex:1},
     {field:"image_path", hide:true},
     {field:"imageSrc",headerName:"Image",cellRenderer:GridImageComponent,flex:1},
     {field:"grid_actions", cellRenderer: GridActionsComponent,flex:1}
@@ -67,6 +69,16 @@ export class GridComponent {
   onSelectionChanged(event:SelectionChangedEvent){
     this.selectedData$.next(event.api.getSelectedRows().map(row => row.id))
   }
+
+  async filterCountryRecords(countries:string[]){
+    let records:any[] = await this.contentService.getVisibleRecords();
+    if (countries.length==0){
+      this.rowData$.next(records)
+      return
+    }
+    records = records.filter((item:any) => countries.includes(item.country))
+    this.rowData$.next(records)
+    }
 
   async updateTableRows(){
     const records:any[] = await this.contentService.getVisibleRecords();

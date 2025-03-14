@@ -32,7 +32,9 @@ export class AddRecordComponent {
     phone: new FormControl('',[Validators.required]),
     dob: new FormControl<Date|null>(null,[Validators.required]),
     image: new FormControl(null, []),
-    hidden_file_size: new FormControl([],[fileSizeValidator(10)])
+    hidden_file_size: new FormControl([],[fileSizeValidator(10)]),
+    country: new FormControl('',[Validators.required]),
+    state: new FormControl('',[Validators.required])
   }) 
   overlayService = inject(OverlayService)
   async onSubmit(){

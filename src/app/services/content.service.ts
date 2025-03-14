@@ -92,4 +92,20 @@ export class ContentService {
     const response = await this.fetchWithAuth('http://localhost:8080/test/upload',options)
     return response
   }
+
+  async getCountryOptions(){
+    let options = {
+      method:"GET"
+    }
+    const response = await this.fetchWithAuth(`http://127.0.0.1:8080/test/countries`,options);
+    return response
+  }
+
+  async getStateOptions(country_code:string){
+    let options = {
+      method:"GET"
+    }
+    const response = await this.fetchWithAuth(`http://127.0.0.1:8080/test/states/${country_code}`,options);
+    return response
+  }
 }

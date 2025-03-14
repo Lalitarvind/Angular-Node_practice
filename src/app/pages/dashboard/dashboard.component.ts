@@ -1,4 +1,4 @@
-import { Component,inject,ViewChild } from '@angular/core';
+import { Component,inject,OnInit,ViewChild } from '@angular/core';
 import { GridComponent } from "../../supporting-components/grid/grid.component";
 import { MatIconModule } from '@angular/material/icon';
 import { OverlayService } from '../../services/overlay.service';
@@ -8,21 +8,25 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommunicationService } from '../../services/communication.service';
 import { ExportDialogComponent } from '../../supporting-components/export-dialog/export-dialog.component';
 import { ImportDialogComponent } from '../../supporting-components/import-dialog/import-dialog.component';
+import { MatSelectModule } from '@angular/material/select';
+import { ContentService } from '../../services/content.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ GridComponent, MatIconModule, MatButtonModule],
+  imports: [ GridComponent, MatIconModule, MatButtonModule, MatSelectModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 
 
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
   @ViewChild(GridComponent) gridComponent!:GridComponent;
   commsService = inject(CommunicationService)
   overlayService = inject(OverlayService)
+  contentService = inject(ContentService)
   selectedRecords:any[] = []
+  countryOptions!:any[]
   constructor(){
     // this.gridComponent.selectedData$.subscribe(arg => this.selectedRecords = arg);
     this.commsService.currentChildData.subscribe(data =>{
@@ -32,6 +36,15 @@ export class DashboardComponent {
       }
     })
   }
+
+  async ngOnInit(){
+    this.countryOptions = await this.contentService.getCountryOptions();
+  }
+
+  onCountryFilterChange(event:any){
+    this.gridComponent.filterCountryRecords(event.value)
+  }
+
   onAddRecord(){
     this.overlayService.open(AddRecordComponent)
   }

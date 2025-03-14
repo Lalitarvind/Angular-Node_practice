@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -7,7 +7,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { ContentService } from '../../services/content.service';
 
+interface DropdownOptions{
+  "value": string,
+  "display": string
+}
 @Component({
   selector: 'app-personal-details-form',
   standalone: true,
@@ -24,24 +29,45 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './personal-details-form.component.html',
   styleUrl: './personal-details-form.component.css'
 })
-export class PersonalDetailsFormComponent {
+
+export class PersonalDetailsFormComponent implements OnInit{
   @Input() form!:FormGroup;
-  @Input() fileNames!:string[];
+  @Input() fileNames:string[]=[];
   selectedImages!:File[];
+  countryOptions:any[]=[]
+  stateOptions:any[]=[]
+
+  contentService = inject(ContentService)
   genders:any[]=[
       {value:'male', viewValue:'Male'},
       {value:'female', viewValue:'Female'},
       {value:'transgender', viewValue:'Transgender'}
     ]
+
+  async ngOnInit(){
+    this.countryOptions = await this.contentService.getCountryOptions();
+  }
+
+  async onCountrySelectionChange(event:any){
+    this.form.get('state')?.reset();
+    this.form.get('state')?.disable();
+    this.stateOptions = await this.contentService.getStateOptions(event.source.value);
+    this.form.get('state')?.enable();
+  }
+
   onFileSelected(event: any) {
       this.selectedImages = Array.from(event.target.files);
       let imgSizes:number[] = []
-      this.selectedImages.forEach((img)=>{this.fileNames.push(img.name);imgSizes.push(img.size)});
+      this.selectedImages.forEach((img)=>{
+        this.fileNames.push(img.name);
+        imgSizes.push(img.size)
+      });
       this.form.patchValue({
         hidden_file_size:imgSizes
       })
       this.form.get('hidden_file_size')?.markAsTouched()
     }
+
   getFormValues(){
     const formData = new FormData();
     this.selectedImages.forEach((img)=>formData.append('files',img))
@@ -51,7 +77,9 @@ export class PersonalDetailsFormComponent {
       'email': this.form.value.email,
       'gender': this.form.value.gender,
       'phone': this.form.value.phone,
-      'dob': new Date(this.form.value.dob).toISOString().split('T')[0]
+      'dob': new Date(this.form.value.dob).toISOString().split('T')[0],
+      'country': this.form.value.country,
+      'state': this.form.value.state
   }))
     return formData
   }
