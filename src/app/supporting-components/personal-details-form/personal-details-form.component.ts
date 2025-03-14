@@ -105,4 +105,8 @@ export class PersonalDetailsFormComponent implements OnInit{
     updates.append('jsondata', JSON.stringify(jsondata))
     return updates;
   }
+
+  dateFilter = (d: Date | null): boolean => {
+    return (d || new Date()) < new Date();
+  };
 }
