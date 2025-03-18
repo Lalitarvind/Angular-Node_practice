@@ -6,10 +6,30 @@
     border-radius: 8px;
   "
 >
-  <div id="actions" class="d-flex flex-row justify-content-end">
-    <mat-form-field>
+  <div id="actions" class="d-flex flex-row justify-content-end" [formGroup]="form">
+    <mat-form-field appearance="outline" class="me-2">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate formControlName="start" placeholder="Start date">
+        <input matEndDate formControlName="end" placeholder="End date">
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    
+      @if (form.controls['start'].hasError('matStartDateInvalid')) {
+        <mat-error>Invalid start date</mat-error>
+      }
+      @if (form.controls['end'].hasError('matEndDateInvalid')) {
+        <mat-error>Invalid end date</mat-error>
+      }
+    </mat-form-field>
+    <button mat-mini-fab (click)="onDateRangeFilter()" [disabled]="!(form.value.start && form.value.end)">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+    <mat-form-field appearance="outline">
       <mat-label>Country</mat-label>
-      <mat-select (selectionChange)="onCountryFilterChange($event)" multiple>
+      <mat-select  (selectionChange)="onCountryFilterChange($event)" multiple>
         @for (country of countryOptions; track country) {
           <mat-option [value]="country.country_code">{{country.country_name}}</mat-option>
         }

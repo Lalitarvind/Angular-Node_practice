@@ -1,4 +1,4 @@
-import { Component,inject,OnInit,ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component,inject,OnInit,ViewChild } from '@angular/core';
 import { GridComponent } from "../../supporting-components/grid/grid.component";
 import { MatIconModule } from '@angular/material/icon';
 import { OverlayService } from '../../services/overlay.service';
@@ -10,13 +10,18 @@ import { ExportDialogComponent } from '../../supporting-components/export-dialog
 import { ImportDialogComponent } from '../../supporting-components/import-dialog/import-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 import { ContentService } from '../../services/content.service';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ GridComponent, MatIconModule, MatButtonModule, MatSelectModule],
+  providers: [provideNativeDateAdapter()],
+  imports: [ GridComponent, MatIconModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatDatepickerModule],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrl: './dashboard.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 
@@ -27,6 +32,12 @@ export class DashboardComponent implements OnInit{
   contentService = inject(ContentService)
   selectedRecords:any[] = []
   countryOptions!:any[]
+
+  form:FormGroup = new FormGroup({
+    start: new FormControl<Date|null>(null),
+    end: new FormControl<Date|null>(null)
+  })
+
   constructor(){
     // this.gridComponent.selectedData$.subscribe(arg => this.selectedRecords = arg);
     this.commsService.currentChildData.subscribe(data =>{
@@ -66,4 +77,9 @@ export class DashboardComponent implements OnInit{
     // })
   }
 
+  onDateRangeFilter(){
+    const start_date = new Date(this.form.value.start)
+    const end_date = new Date(this.form.value.end)
+    this.gridComponent.filterDateRanges(start_date,end_date)
+  }
 }

@@ -84,4 +84,13 @@ export class GridComponent {
     const records:any[] = await this.contentService.getVisibleRecords();
     this.rowData$.next(records);
   }
+
+  async filterDateRanges(start:Date,end:Date){
+    let records:any[] = await this.contentService.getVisibleRecords();
+    records = records.filter((row)=>{
+      const row_date = new Date(row.dob)
+      return row_date>start && row_date<end
+    })
+    this.rowData$.next(records)
+  }
 }
