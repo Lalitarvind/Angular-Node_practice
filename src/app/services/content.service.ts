@@ -108,4 +108,20 @@ export class ContentService {
     const response = await this.fetchWithAuth(`http://127.0.0.1:8080/test/states/${country_code}`,options);
     return response
   }
+
+  async getModules(){
+    let options = {
+      method:"GET"
+    }
+    const response = await this.fetchWithAuth('http://127.0.0.1:8080/roles/list_modules',options);
+    return response
+  }
+
+  async getModuleActions(module:Number){
+    let options = {
+      method:"GET"
+    }
+    const response = await this.fetchWithAuth(`http://127.0.0.1:8080/roles/module/actions/${module}`,options);
+    return response
+  }
 }
