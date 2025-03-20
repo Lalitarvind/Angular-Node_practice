@@ -10,6 +10,10 @@ dialog {
     overflow-y: scroll;
   }
 
+  .modal-body {
+    padding: 20px;
+  }
+
 @media (min-width: 768px) {
     dialog {
       padding: 2rem;

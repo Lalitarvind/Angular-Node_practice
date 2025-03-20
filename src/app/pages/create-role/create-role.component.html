@@ -6,23 +6,13 @@
               <h5 class="modal-title">Create Role</h5>
               <button type="button" class="btn-close" aria-label="Close" (click)="onClose()"></button>
             </div>
-            <!-- <app-personal-details-form [form]="form"></app-personal-details-form> -->
-            <mat-form-field appearance="outline">
-                <mat-label>Outline form field</mat-label>
-                <input matInput placeholder="Placeholder" formControlName="role_name">
+            <div class="modal-body overflow-y-scroll">
+              <mat-form-field appearance="outline">
+                  <mat-label>Enter Role Name:</mat-label>
+                  <input matInput placeholder="Placeholder" formControlName="role_name">
               </mat-form-field>
-            <ul formArrayName="modules">
-                @for(module of Modules.controls;track module; let m_ind = $index ){
-                    <li [formGroupName="m_ind"]>
-                        <mat-checkbox (change)="onParentChange($event,m_ind)"> {{this.module_permissions[m_ind].name}} </mat-checkbox>
-                        <ul formArrayName="m_ind.children">
-                            @for(control of this.getFormArray(m_ind).controls;track control;let c_ind = $index){
-                                <mat-checkbox (change)="onChildChange($event,m_ind,c_ind)"> {{this.module_permissions[m_ind].permissions[c_ind].action}} </mat-checkbox>
-                            }
-                        </ul>
-                    </li>
-                }
-            </ul>
+              <app-role-details-form [form]="form" [module_permissions]="module_permissions"></app-role-details-form>
+            </div>
             <div class="modal-footer d-flex justify-content-start mt-2">
               <button 
                 type="submit" 

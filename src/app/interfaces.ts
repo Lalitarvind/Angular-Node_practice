@@ -7,3 +7,15 @@ export interface GridRow{
   phone:string,
   gender:string
 }
+
+export interface permission{
+  pid: number,
+  action: string,
+  checked: boolean
+}
+
+export interface module{
+  mid: number,
+  name: string,
+  permissions: permission[]
+}
