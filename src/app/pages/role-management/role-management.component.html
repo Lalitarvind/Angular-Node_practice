@@ -1,0 +1,33 @@
+<div
+  style="
+    padding: 2%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+  "
+>
+<div id="actions" class="d-flex flex-row justify-content-between">
+    <h3>Role Management</h3>
+    <button
+        mat-button extended
+        (click)="onAddRole()"
+        aria-label="Add record"
+        style="color: black"
+      >
+        <mat-icon>add</mat-icon>
+        ADD
+    </button>
+
+  </div>
+  <!-- <app-actions /> -->
+  <div style="height: 70vh; width: 100%">
+    <ag-grid-angular
+    style="width: 100%; height: 100%;"
+    [rowData]="rowData$ | async"
+    [columnDefs]="colDefs" 
+    [pagination]="pagination"
+    [paginationPageSize]="paginationPageSize"
+    [paginationPageSizeSelector]="paginationPageSizeSelector"
+  />
+  </div>
+</div>
