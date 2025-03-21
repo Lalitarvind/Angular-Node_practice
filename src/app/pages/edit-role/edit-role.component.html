@@ -1,0 +1,29 @@
+<dialog open aria-labelledby="Add-Profile">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom d-flex justify-content-between mb-10 p-2">
+              <h5 class="modal-title">Edit Role Permissions</h5>
+              <button type="button" class="btn-close" aria-label="Close" (click)="onClose()"></button>
+            </div>
+            <div class="modal-body overflow-y-scroll">
+              <mat-form-field appearance="outline">
+                  <mat-label>Enter Role Name:</mat-label>
+                  <input matInput placeholder="Placeholder" formControlName="role_name">
+              </mat-form-field>
+              <app-role-details-form [form]="form" [module_permissions]="module_permissions"></app-role-details-form>
+            </div>
+            <div class="modal-footer d-flex justify-content-start mt-2">
+              <button 
+                type="submit" 
+                mat-flat-button
+                [disabled]="!(form.valid && form.dirty)"
+                [ngStyle]="{
+                  'color': (form.valid && form.dirty) ? 'white' : 'darkgray',
+                  'opacity': (form.valid && form.dirty) ? '1':'0.5',
+                }">Save</button>
+            </div>
+          </div>
+        </div>
+    </form>
+  </dialog>
