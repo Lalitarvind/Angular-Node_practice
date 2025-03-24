@@ -124,4 +124,81 @@ export class ContentService {
     const response = await this.fetchWithAuth(`http://127.0.0.1:8080/roles/module/actions/${module}`,options);
     return response
   }
+
+  async addRolePermissions(role_name:string, permissions:number[]){
+    let request_body = {
+      permissions: permissions,
+      role_name: role_name
+    }
+
+    let options = {
+      method:"POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(request_body)
+    }
+    const response = await this.fetchWithAuth('http://127.0.0.1:8080/roles/add',options);
+    return response
+  }
+
+  async getRoleInfo(){
+    let options = {
+      method:"GET"
+    }
+    const response = await this.fetchWithAuth(`http://127.0.0.1:8080/roles/list_roles`,options);
+    return response
+  }
+
+  async changeRoleStatus(rid:number, status:boolean){
+    let request_body = {
+      role_id: rid,
+      status: status
+    }
+
+    let options = {
+      method:"POST",
+      headers:{
+        "Content-Type":'application/json'
+      },
+      body: JSON.stringify(request_body)
+    }
+
+    const response = await this.fetchWithAuth('http://127.0.0.1:8080/roles/change_status',options)
+    return response
+  }
+
+  async getRolePermissions(rid:number){
+    let options = {
+      method: "GET"
+    }
+    const response = await this.fetchWithAuth(`http://127.0.0.1:8080/roles/get_role_permissions/${rid}`,options)
+    return response
+  }
+
+  async deleteRole(rid:number){
+    let options = {
+      method:'GET'
+    }
+    const response = await this.fetchWithAuth(`http://127.0.0.1:8080/roles/change_visibility/${rid}`,options)
+    return response
+  }
+
+  async editRolePermissions(rid:number, permissionIds:number[]){
+    let request_body = {
+      role_id: rid,
+      permissionIds: permissionIds
+    }
+
+    let options = {
+      method:"POST",
+      headers:{
+        "Content-Type":'application/json'
+      },
+      body: JSON.stringify(request_body)
+    }
+
+    const response = await this.fetchWithAuth('http://127.0.0.1:8080/roles/modify_permissions',options)
+    return response
+  }
 }
