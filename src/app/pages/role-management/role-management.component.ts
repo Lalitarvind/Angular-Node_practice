@@ -40,7 +40,7 @@ export class RoleManagementComponent implements OnInit{
   colDefs:ColDef[]=[
     {field:"id", hide:true},
     {field:"role_name",headerName:"Role Name",flex:1},
-    {field:"status",headerName:"Status",cellRenderer:RoleGridStatusComponent , flex:1},
+    {field:"status",headerName:"Status",cellRenderer:RoleGridStatusComponent, cellRendererParams:{OnAction: this.updateStatus.bind(this) } , flex:1},
     {field:"doc",headerName:"Created At",flex:1},
     {field:"actions", cellRenderer:RoleGridActionsComponent, flex:1}
   ]
@@ -61,6 +61,10 @@ export class RoleManagementComponent implements OnInit{
   async updateTableRows(){
     let rows = await this.contentService.getRoleInfo();
     this.rowData$.next(rows)
+  }
+
+  async updateStatus(rowData:any, active:boolean){
+    const resp = await this.contentService.changeRoleStatus(rowData.id, active)
   }
   
 }

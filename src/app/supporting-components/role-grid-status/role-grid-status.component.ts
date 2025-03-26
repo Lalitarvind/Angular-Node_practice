@@ -26,7 +26,8 @@ export class RoleGridStatusComponent implements ICellRendererAngularComp{
   }
   async onToggle(id:number, event:MatSlideToggleChange){
     this.isChecked = event.checked
-    const resp = await this.contentService.changeRoleStatus(id, event.checked)
-    // console.log("Toggle response:",resp)
+    if (this.params.OnAction){
+      this.params.OnAction(this.params.data, this.isChecked)
+    }
   }
 }
