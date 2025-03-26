@@ -3,12 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
-import { GridRow } from '../../interfaces';
-import { DeletePopupComponent } from '../../pages/delete-popup/delete-popup.component';
-import { EditRecordComponent } from '../../pages/edit-record/edit-record.component';
-import { ViewRecordComponent } from '../../pages/view-record/view-record.component';
 import { OverlayService } from '../../services/overlay.service';
-import { EditRoleComponent } from '../../pages/edit-role/edit-role.component';
 
 @Component({
   selector: 'app-role-grid-actions',
@@ -57,9 +52,13 @@ export class RoleGridActionsComponent implements ICellRendererAngularComp{
     }
     overlayService = inject(OverlayService);
     onEditRecord(rowData:any){
-      this.overlayService.open(EditRoleComponent,{role_id: rowData.id, role_name: rowData.role_name})
+      if (this.params.actions?.edit){
+        this.params.actions.edit(rowData)
+      }
     } 
     onDeleteRecord(rowData:any){
-      this.overlayService.open(DeletePopupComponent,{rids: [rowData.id], delete_message:`Confirm delete of record '${rowData.first_name} ${rowData.last_name}'`})
+      if (this.params.actions?.delete){
+        this.params.actions.delete(rowData)
+      }
     }
 }

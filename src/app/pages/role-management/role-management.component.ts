@@ -14,6 +14,8 @@ import { ContentService } from '../../services/content.service';
 import { CommunicationService } from '../../services/communication.service';
 import { RoleGridStatusComponent } from '../../supporting-components/role-grid-status/role-grid-status.component';
 import { RoleGridActionsComponent } from '../../supporting-components/role-grid-actions/role-grid-actions.component';
+import { EditRoleComponent } from '../edit-role/edit-role.component';
+import { DeletePopupComponent } from '../delete-popup/delete-popup.component';
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -42,7 +44,7 @@ export class RoleManagementComponent implements OnInit{
     {field:"role_name",headerName:"Role Name",flex:1},
     {field:"status",headerName:"Status",cellRenderer:RoleGridStatusComponent, cellRendererParams:{OnAction: this.updateStatus.bind(this) } , flex:1},
     {field:"doc",headerName:"Created At",flex:1},
-    {field:"actions", cellRenderer:RoleGridActionsComponent, flex:1}
+    {field:"actions", cellRenderer:RoleGridActionsComponent, cellRendererParams:{edit: this.editRole.bind(this), delete: this.deleteRole.bind(this)}, flex:1}
   ]
   constructor(){
     // this.gridComponent.selectedData$.subscribe(arg => this.selectedRecords = arg);
@@ -66,5 +68,12 @@ export class RoleManagementComponent implements OnInit{
   async updateStatus(rowData:any, active:boolean){
     const resp = await this.contentService.changeRoleStatus(rowData.id, active)
   }
+
+  async editRole(rowData:any){
+    this.overlayService.open(EditRoleComponent,{role_id: rowData.id, role_name: rowData.role_name})
+  }
   
+  async deleteRole(rowData:any){
+    this.overlayService.open(DeletePopupComponent,{rids: [rowData.id], delete_message:`Confirm delete of record '${rowData.first_name} ${rowData.last_name}'`})
+  }
 }
