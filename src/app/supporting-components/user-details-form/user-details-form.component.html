@@ -1,0 +1,64 @@
+<div class="modal-body overflow-y-scroll" [formGroup]="form">
+    <div class="row gx-3">
+        <div class="col">
+            <label for="fname_field" class="info-label">First Name:</label>
+            <mat-form-field appearance="outline" class="w-100">
+            <input matInput id="fname_field" type="text" formControlName="first_name">
+            </mat-form-field>
+        </div>
+        <div class="col">
+            <label for="lname_field" class="info-label">Last Name:</label>
+            <mat-form-field appearance="outline" class="w-100">
+            <input matInput id="lname_field" type="text" formControlName="last_name">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col">
+            <label for="email_field" class="info-label">Email ID:</label>
+            <mat-form-field appearance="outline" class="w-100">
+            <input matInput id="email_field" type="email" formControlName="email">
+            </mat-form-field>
+        </div>
+        <div class="col">
+            <label for="phone_field" class="info-label">Phone Number:</label>
+            <mat-form-field appearance="outline" class="w-100">
+            <input matInput id="email_field" type="email" formControlName="email">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row gx-3 mt-2">
+        <div class="col">
+            <label for="uname_field" class="info-label"> Username:</label>
+            <mat-form-field appearance="outline" class="w-100">
+            <input matInput id="uname_field" type="text" formControlName="user_name">
+            </mat-form-field>
+        </div>
+        <div class="col">
+            <label for="role_field" class="info-label">Role:</label>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select id="role_field" formControlName="role">
+                <mat-option *ngFor="let role of roles;" [value]="role.id">
+                  {{ role.role_name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+    </div>
+    <div class="row gx-3">
+        <div class="col">
+            <label for="password_field" class="info-label">Password:</label>
+            <mat-form-field appearance="outline" class="w-100">
+            <input matInput id="password_field" type="password" formControlName="password">
+            </mat-form-field>
+        </div>
+        <div class="col">
+            <label for="confirm_password_field" class="info-label">Confirm Password:</label>
+            <mat-form-field appearance="outline" class="w-100">
+            <input matInput id="confirm_password_field" type="password" formControlName="confirm_password">
+            </mat-form-field>
+        </div>
+    </div>
+ </div>

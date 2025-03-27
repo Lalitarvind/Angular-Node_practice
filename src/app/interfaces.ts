@@ -19,3 +19,13 @@ export interface module{
   name: string,
   permissions: permission[]
 }
+
+export interface User{
+  username: string,
+  permissions: number[]
+}
+
+export interface role{
+  id: number,
+  role_name: string
+}
