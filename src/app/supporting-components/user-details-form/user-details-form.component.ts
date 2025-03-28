@@ -4,16 +4,20 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ContentService } from '../../services/content.service';
 import { role } from '../../interfaces';
+import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-user-details-form',
   standalone: true,
-  imports: [ReactiveFormsModule,MatFormFieldModule,MatSelectModule],
+  imports: [ReactiveFormsModule,MatFormFieldModule,MatSelectModule,MatInputModule,CommonModule],
   templateUrl: './user-details-form.component.html',
   styleUrl: './user-details-form.component.css'
 })
 export class UserDetailsFormComponent implements OnInit{
   @Input({required:true}) form!:FormGroup
+  @Input({required:true}) comp_name!:string
   private contentService = inject(ContentService)
   roles!:role[]
   
