@@ -22,7 +22,7 @@ export class CreateMorderatorComponent {
     last_name: new FormControl('',[Validators.required]),
     user_name: new FormControl('',[Validators.required]),
     email: new FormControl('',[Validators.required,Validators.email]),
-    phone: new FormControl('',[Validators.required]),
+    phone_number: new FormControl('',[Validators.required]),
     password: new FormControl('', [Validators.required]),
     confirm_password: new FormControl('', [Validators.required]),
     role: new FormControl('', [Validators.required]), 

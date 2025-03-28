@@ -1,0 +1,38 @@
+<dialog open aria-labelledby="Add-Profile">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom d-flex justify-content-between mb-10 p-2">
+              <h5 class="modal-title">Edit User</h5>
+              <button type="button" class="btn-close" aria-label="Close" (click)="onClose()"></button>
+            </div>
+            <app-user-details-form [form]="form" comp_name="edit"></app-user-details-form>
+            <div class="modal-footer d-flex justify-content-start mt-2 gap-2">
+                <button 
+                type="submit" 
+                mat-flat-button
+                [disabled]="!(form.valid && form.dirty)"
+                [ngStyle]="{
+                    'color': (form.valid && form.dirty) ? 'white' : 'darkgray',
+                    'opacity': (form.valid && form.dirty) ? '1':'0.5',
+                }">Save</button>
+                <button 
+                type="button" 
+                mat-flat-button
+                [disabled]="!form.dirty"
+                [ngStyle]="{
+                    'color': (form.dirty) ? 'white' : 'darkgray',
+                    'opacity': (form.dirty) ? '1':'0.5',
+                }"
+                (click)="onReset()"
+                >Reset</button>
+                <button
+                type = "button"
+                mat-flat-button
+                (click)="onChangePassword()"
+                >Change Password</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</dialog>

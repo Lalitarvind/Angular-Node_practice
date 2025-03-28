@@ -31,7 +31,7 @@ export class UserDetailsFormComponent implements OnInit{
       'last_name': this.form.value.last_name,
       'email': this.form.value.email,
       'user_name': this.form.value.user_name,
-      'phone': this.form.value.phone,
+      'phone_number': this.form.value.phone,
       'password': this.form.value.password,
       'role_id': this.form.value.role
     }
