@@ -6,7 +6,7 @@
               <h5 class="modal-title">Edit User</h5>
               <button type="button" class="btn-close" aria-label="Close" (click)="onClose()"></button>
             </div>
-            <app-user-details-form [form]="form" comp_name="edit"></app-user-details-form>
+            <app-user-details-form [form]="form"></app-user-details-form>
             <div class="modal-footer d-flex justify-content-start mt-2 gap-2">
                 <button 
                 type="submit" 
@@ -26,11 +26,6 @@
                 }"
                 (click)="onReset()"
                 >Reset</button>
-                <button
-                type = "button"
-                mat-flat-button
-                (click)="onChangePassword()"
-                >Change Password</button>
             </div>
         </div>
     </div>

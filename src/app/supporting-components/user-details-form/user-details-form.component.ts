@@ -17,7 +17,6 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class UserDetailsFormComponent implements OnInit{
   @Input({required:true}) form!:FormGroup
-  @Input({required:true}) comp_name!:string
   private contentService = inject(ContentService)
   roles!:role[]
   

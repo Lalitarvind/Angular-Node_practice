@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { CommunicationService } from '../../services/communication.service';
 import { OverlayService } from '../../services/overlay.service';
-import { ResetPasswordComponent } from '../../supporting-components/reset-password/reset-password.component';
 
 @Component({
   selector: 'app-edit-user',
@@ -27,8 +26,8 @@ export class EditUserComponent implements OnInit{
     user_name: new FormControl({value:'',disabled:true},[Validators.required]),
     email: new FormControl({value:'',disabled:true},[Validators.required,Validators.email]),
     phone_number: new FormControl('',[Validators.required]),
-    password: new FormControl({value:'',disabled:true}, [Validators.required]),
-    confirm_password: new FormControl({value:'',disabled:true}, [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+    confirm_password: new FormControl('', [Validators.required]),
     role: new FormControl('', [Validators.required]), 
   })
 
@@ -66,10 +65,6 @@ export class EditUserComponent implements OnInit{
       this.commsService.changeChildData("UPDATE MORDERATOR GRID")
       this.onClose()
     }
-  }
-
-  onChangePassword(){
-    this.overlayService.open(ResetPasswordComponent,{user_id:this.user_id,user_name: this.form.value.user_name,submit_action:this.resetPassword})
   }
 
   resetPassword(user_id:number, password:string){
