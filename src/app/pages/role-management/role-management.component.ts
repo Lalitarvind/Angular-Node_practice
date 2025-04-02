@@ -44,7 +44,7 @@ export class RoleManagementComponent implements OnInit{
     {field:"role_name",headerName:"Role Name",flex:1},
     {field:"status",headerName:"Status",cellRenderer:RoleGridStatusComponent, cellRendererParams:{OnAction: this.updateStatus.bind(this) } , flex:1},
     {field:"doc",headerName:"Created At",flex:1},
-    {field:"actions", cellRenderer:RoleGridActionsComponent, cellRendererParams:{edit: this.editRole.bind(this), delete: this.deleteRole.bind(this)}, flex:1}
+    {field:"actions", cellRenderer:RoleGridActionsComponent, cellRendererParams:{actions:{edit: this.editRole.bind(this), delete: this.deleteRole.bind(this)}}, flex:1}
   ]
   constructor(){
     // this.gridComponent.selectedData$.subscribe(arg => this.selectedRecords = arg);

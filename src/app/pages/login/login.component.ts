@@ -2,6 +2,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms'; 
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   isLoginView:boolean = true;
-
+  authService = inject(AuthService)
   userRegisterObj:any = {
     userName:'',
     password:'',
@@ -41,14 +42,6 @@ export class LoginComponent {
   }
 
   onLogin(){
-    this.http.post("http://127.0.0.1:8080/auth/login",this.userLoginObj).subscribe((res:any)=>{
-      if (res.result){
-        sessionStorage.setItem('angular18SessionAccess',res.data.access_token);
-        this.router.navigateByUrl('dashboard')
-      }
-      else{
-        alert(res.message)
-      }
-    })
+    this.authService.login(this.userLoginObj.emailId,this.userLoginObj.password)
   }
 }
