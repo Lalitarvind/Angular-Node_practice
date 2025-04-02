@@ -22,7 +22,10 @@ export interface module{
 
 export interface User{
   username: string,
-  permissions: number[]
+  roleID: number,
+  roleName: string,
+  permissionIDs: number[]
+  permissionNames: string[]
 }
 
 export interface role{
